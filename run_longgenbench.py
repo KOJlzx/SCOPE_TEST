@@ -9,8 +9,8 @@ from tqdm import tqdm
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-datasets = ["gsm8k", "csqa", "mmlu"]
-
+datasets = ["gsm8k"]
+# datasets = ["gsm8k", "csqa", "mmlu"]
 dataset2maxlen_8K = {
     "gsm8k": 7950,
     "mmlu": 7950,
@@ -81,7 +81,7 @@ def main(args):
     else:
         output_max_len = dataset2maxlen_8K[args.dataset]
     
-    with open(args.data_file) as fp:
+    with open(args.data_file, encoding='utf-8') as fp:
         for line in fp:
             example = json.loads(line)
             
@@ -314,14 +314,14 @@ if __name__ == "__main__":
     save_dir = args.save_dir
         
     max_capacity_prompts = args.max_capacity_prompts
-    
+
+    t = 0
     for idx, dataset in enumerate(datasets):
-        
         print(f"Working on max_capacity_prompts {args.max_capacity_prompts} dataset {dataset} - {idx}/{len(datasets)}")
         
         args.dataset = dataset
         if args.dataset == "csqa":
             args.K = int(args.K / 3 * 4) # GSM8K/MMLU has 30,60 questions in a single long input;CSQA has 40,80 questions
-        args.data_file = f"data/LongGenBench_examples/{args.dataset}_{args.K}.jsonl"
+        args.data_file = f"LongGenBench_examples/{args.dataset}_{args.K}.jsonl"
         
         main(args)

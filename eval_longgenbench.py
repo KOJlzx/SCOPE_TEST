@@ -4,6 +4,8 @@ import argparse
 import numpy as np
 import re
 
+tt = open("eval.txt", "w", encoding="utf-8")
+
 def parse_args(args=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--results_dir', type=str, default=None)
@@ -26,6 +28,8 @@ def compare_answers(pred, answers):
     # Extract predicted answers from the pred string
     predicted_answers = extract_predicted_answers(pred)
 
+    tt.write(f'Expected: {expected_answers}\n')
+    tt.write(f'Predicted: {predicted_answers}\n')
     # print(f'Expected: {expected_answers}')
     # print(f'Predicted: {predicted_answers}')
     
@@ -46,6 +50,7 @@ def compare_answers(pred, answers):
     total_questions = len(expected_answers)
     accuracy = correct_count / total_questions if total_questions > 0 else 0.0
     # print(f'Accuracy: {accuracy:.4f}')
+    tt.write(f'Accuracy: {accuracy:.4f}\n')
     return accuracy
 
 

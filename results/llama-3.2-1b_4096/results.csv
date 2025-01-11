@@ -1,0 +1,6 @@
+dataset,gsm8k,mmlu,csqa
+SnapKV,0.1667,-1,-1
+StreamingLLM,-1,-1,-1
+H2O,-1,-1,-1
+PyramidKV,0.1667,-1,-1
+ALLKV,0.1667,-1,-1
